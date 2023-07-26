@@ -20,7 +20,9 @@ export default class Paddle extends Phaser.Physics.Arcade.Sprite {
 
     updatePosition() {
 
-      if(this.scene.mouseX - 8 > this.x)
+      if(this.scene.mouseX === undefined) return 
+
+      else if(this.scene.mouseX - 8 > this.x)
       {
         this.setVelocityX(this.maxSpeed);
       }

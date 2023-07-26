@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import PowerUp from '../prefabs/powerup';
 
 export default class Brick extends Phaser.GameObjects.Rectangle {
   constructor(scene, x, y, color) {
@@ -23,11 +24,15 @@ export default class Brick extends Phaser.GameObjects.Rectangle {
   }
 
   create() {
-    // Custom initialization logic, if needed
+   
   }
 
   hit() {
+    // Points are added in "play" scene function hitBrick, change if needed
     this.health--;
+
+    this.scene.gamePoints += 500;
+    this.scene.updateUI();
 
     if(this.health <= 0) {
       this.destroy();
@@ -44,14 +49,8 @@ export default class Brick extends Phaser.GameObjects.Rectangle {
       const brick = new Brick(scene, x, y, brickColor);
       brickGroup.push(brick);
     }
-
-    // brickGroup.children.iterate(brick => {
-    //   brick.body.setImmovable(true);
-    // });
-
-
+    
     return brickGroup;
   }
-
 
 }

@@ -4,11 +4,14 @@ export default class Ball extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture) {
       super(scene, x, y, texture);
   
+      this.scene = scene;
       scene.add.existing(this);
       scene.physics.add.existing(this);
 
+
       // Game attributes
 
+      this.maxSpeed = 600;
       this.active = false;
   
       // Nadanie piłce właściwości fizycznych
@@ -24,24 +27,35 @@ export default class Ball extends Phaser.Physics.Arcade.Sprite {
       if(this.active === true) return;
       else {
         this.x = this.scene.paddle.x;
-
       }
-
     }
 
-    makeActive()
+    setActive(bool)
     {
-      this.setImmovable(false);
-      this.setGravity(5)
-      this.setVelocity(50, -200)
+      if(bool === true)
+      {
+        this.active = true;
+        this.setImmovable(false);
+        this.setGravity(5)
+        this.setVelocity(50, -350)
+      }
+      else if(bool === false) {
+        this.active = false;
+        this.setImmovable(true)
+        this.setGravity(0)
+        this.setVelocity(0)
+        this.setY(this.scene.paddle.y-this.scene.paddle.height/2 - 8);
+      }
+
     }
 
     checkBottomBound()
     {
       if(this.y >= this.scene.game.CONFIG.width - this.width)
-      {
-          this.scene.cameras.main.setBackgroundColor(0x000000);
-          this.destroy();
+      {  
+          this.setActive(false);
+          this.scene.gameLifes.removeLife();
+          this.scene.updateUI();
       }
     }
 

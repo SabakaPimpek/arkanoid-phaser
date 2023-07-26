@@ -1,6 +1,7 @@
 import Text from '../ui/text';
 import ballImg from '../images/ball.png'
 import paddleImg from '../images/paddle.png'
+import powerUpImg from '../images/powerups.png'
 
 export default class Preload extends Phaser.Scene {
     
@@ -30,6 +31,12 @@ export default class Preload extends Phaser.Scene {
         this.load.image('paddle', paddleImg, {
             frameWidth: 150,
             frameHeight: 50,
+        })
+
+        this.load.spritesheet('powerUp', powerUpImg, {
+            frameWidth: 20,
+            frameHeight: 11,
+            spacing: 1
         })
        
     }
