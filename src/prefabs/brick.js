@@ -1,26 +1,25 @@
 import Phaser from 'phaser'
 import PowerUp from '../prefabs/powerup';
 
-export default class Brick extends Phaser.GameObjects.Rectangle {
-  constructor(scene, x, y, color) {
-    super(scene, x, y);
+export default class Brick extends Phaser.Physics.Arcade.Sprite {
+  constructor(scene, x, y, texture) {
+    super(scene, x, y, texture);
 
     this.scene = scene;
-    this.setFillStyle(color);
 
     // Game attributes
 
     this.health = 1;
     this.width = 80;
-    this.height = 30;
+    this.height = 40;
 
     //
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
-    this.body.setImmovable(true);
+    // this.body.setImmovable(true);
 
-    this.create();
+    // this.create();
   }
 
   create() {

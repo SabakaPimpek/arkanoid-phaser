@@ -2,6 +2,7 @@ import Text from '../ui/text';
 import ballImg from '../images/ball.png'
 import paddleImg from '../images/paddle.png'
 import powerUpImg from '../images/powerups.png'
+import brickImg from '../images/brick.png'
 
 export default class Preload extends Phaser.Scene {
     
@@ -38,6 +39,9 @@ export default class Preload extends Phaser.Scene {
             frameHeight: 11,
             spacing: 1
         })
+
+        this.load.image('brick', brickImg)
+        
        
     }
 

@@ -1,8 +1,13 @@
+import Phaser from 'phaser';
+
 import Ball from '../prefabs/ball';
 import Paddle from '../prefabs/paddle';
 import Brick from '../prefabs/brick';
 import Text from '../ui/text';
 import PowerUp from '../prefabs/powerup';
+
+import level1JSON from '../levels/level1.json';
+import brickImg from '../images/brick.png';
 
 export default class Play extends Phaser.Scene {
     
@@ -36,7 +41,8 @@ export default class Play extends Phaser.Scene {
     
     preload ()
     {
-
+        this.load.image('brick', brickImg);
+        this.load.tilemapTiledJSON('level1', level1JSON);
     }
     
     create()
@@ -69,22 +75,69 @@ export default class Play extends Phaser.Scene {
     createBricks()
     {
         this.bricks = this.physics.add.group();
-        const colors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xffc0cb];
 
-        colors.forEach((e, index) => {
-            const brickRow = Brick.addBrickRow(this, 8, e, 85, 150 + 50*index, 10);
-            this.bricks.addMultiple(brickRow);
-        })
+        const map = this.make.tilemap({ key: 'level1' });
+        const tileset = map.addTilesetImage('brick', 'brick')
+
+        let layer = map.createLayer('Level', tileset, 50, 100);
+
+        const matchingTiles = map.filterTiles(tile => tile.index === 1);
+
+        const gos = matchingTiles.map(tile => {
+            const block = new Brick(this, tile.pixelX + 50 , tile.pixelY + 100, 'brick');
+            return block;
+        });
+
+        
+        // const gos = map.createFromTiles(1, -1, { key: 'brick' })
+        // .map(go => {    
+        //     const block = new Brick(this, go.x, go.y + 400, 'brick');
+        //     block.setTint(0x000000)
+        //     return block;
+        // })
+
+        layer.destroy();
+    
+        this.bricks.addMultiple(gos);
 
         this.bricks.children.iterate(brick => {
-            brick.body.setImmovable(true);
+                brick.body.setImmovable(true);
         });
+        
+
+
+        // this.bricks.children.iterate(brick => {
+        //     brick.destroy();
+        // });
+
+
+        // const map = this.make.tilemap({ key: 'level1' })
+        // const tileset = map.addTilesetImage('block', 'block')
+
+        // const layer = new Phaser.Tilemaps.StaticTilemapLayer(this, map, 10, tileset, 0, 100)
+
+
+
+        // const colors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xffc0cb];
+
+        // colors.forEach((e, index) => {
+        //     const brickRow = Brick.addBrickRow(this, 8, e, 85, 150 + 50*index, 10);
+        //     this.bricks.addMultiple(brickRow);
+        // })
+
+        // this.bricks.children.iterate(brick => {
+        //     brick.body.setImmovable(true);
+        // });
 
     }
 
     hitBrick(ball, brick) {
         brick.hit();
         this.generatePowerUp(brick);
+    }
+
+    collectPowerUp(paddle, powerUp) {
+        powerUp.destroy();
     }
 
     getMousePosition()
@@ -154,10 +207,6 @@ export default class Play extends Phaser.Scene {
             e.body.setImmovable(true);
             e.body.setVelocityY(200);
         });
-    }
-
-    collectPowerUp(paddle, powerUp) {
-        console.log(powerUp.powerId)
     }
 
     createUI()

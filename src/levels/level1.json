@@ -1,0 +1,46 @@
+{ "compressionlevel":-1,
+ "height":6,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+            0, 0, 1, 1, 1, 1, 1, 1, 0, 0,
+            0, 0, 1, 1, 1, 1, 1, 1, 0, 0,
+            0, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         "height":6,
+         "id":1,
+         "name":"Level",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":10,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":2,
+ "nextobjectid":1,
+ "orientation":"orthogonal",
+ "renderorder":"right-down",
+ "tiledversion":"1.10.1",
+ "tileheight":40,
+ "tilesets":[
+        {
+         "columns":1,
+         "firstgid":1,
+         "image":"..\/images\/brick.png",
+         "imageheight":40,
+         "imagewidth":80,
+         "margin":0,
+         "name":"brick",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":40,
+         "tilewidth":80
+        }],
+ "tilewidth":80,
+ "type":"map",
+ "version":"1.10",
+ "width":10
+}
